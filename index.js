@@ -42,14 +42,14 @@ const test = async () => {
     // for (var i = 0; i <= lastPage; i++) {
     //   array[i]
     // }
-    await page.goto(`https://weibo.com/p/1005051782703161/follow?page=${fansPage}#Pl_Official_HisRelation__60`)
+    await page.goto(`https://weibo.com/p/1005051782703161/follow?page=${fansPage}#Pl_Official_HisRelation__60`, {waitUntil: 'networkidle2'})
     let lastPage = await getLastPage(page)
     console.log('lastPage', lastPage)
     // 拿当前页的数据
     for (let i = 1; i <= 5; i++) {
       let pageSize = i
       if (i !== 1) {
-        await page.goto(`https://weibo.com/p/1005051782703161/follow?page=${pageSize}#Pl_Official_HisRelation__60`)
+        await page.goto(`https://weibo.com/p/1005051782703161/follow?page=${pageSize}#Pl_Official_HisRelation__60`, {waitUntil: 'networkidle2'})
       }
       let userList = await page.evaluate(() => {
         let nameAndHrefList = [...document.querySelectorAll('.follow_box .follow_list li.follow_item .info_name a.S_txt1')]
