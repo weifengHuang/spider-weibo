@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "json2csv": "^3.11.5",
     "log4js": "^2.4.1",
     "puppeteer": "^0.13.0"
   }
