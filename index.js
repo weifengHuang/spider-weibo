@@ -2,7 +2,6 @@ const puppeteer = require('puppeteer')
 const {user} = require('./config')
 var json2csv = require('json2csv')
 var fs = require('fs')
-console.log('user', user)
 const totalText = []
 const getLastPage = async (page) => {
   let lastPage = await page.evaluate(() => {
@@ -23,11 +22,10 @@ const transToCsvFile = (data) => {
     console.log('file saved')
   })
 }
-const test = async () => {
+const main = async () => {
   try {
     const browser = await puppeteer.launch({
       executablePath: './node_modules/puppeteer/local/chrome-win32/chrome',
-      // args: ['--no-sandbox', '--disable-setuid-sandbox'],
       headless: false,
       userDataDir: 'weibo'
     })
@@ -39,12 +37,8 @@ const test = async () => {
     })
     let totalUserList = []
     let fansPage = 1
-    // for (var i = 0; i <= lastPage; i++) {
-    //   array[i]
-    // }
     await page.goto(`https://weibo.com/p/1005051782703161/follow?page=${fansPage}#Pl_Official_HisRelation__60`, {waitUntil: 'networkidle2'})
     let lastPage = await getLastPage(page)
-    console.log('lastPage', lastPage)
     // 拿当前页的数据
     for (let i = 1; i <= 5; i++) {
       let pageSize = i
@@ -72,10 +66,8 @@ const test = async () => {
       totalUserList = [...totalUserList, ...userList]
     }
     transToCsvFile(totalUserList)
-    console.log('totalUserList', totalUserList, totalUserList.length)
-    console.log('执行结束')
   } catch (e) {
     console.error('e', e)
   }
 }
-test()
+main()
